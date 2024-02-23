@@ -196,10 +196,10 @@ Renders out of order in style choosen
 0-10 try them out or lok at the code
 
 ## Improvements?
-Testing on Linux and Windows
+~~Testing on Linux and Windows~~
 
 ## State
-- As Above, untested in Windows and Linux (todo)
+- In Windows redirecting the text to file causes the special characters to be corrupted.  I thinkj this is some limitation in Windows?  If anyone know, file a bug
 
 ## Notes/Troubleshooting:
 
