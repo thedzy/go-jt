@@ -1,0 +1,31 @@
+{
+  "family": {
+    "husband": {
+      "name": "John Doe",
+      "age": 35,
+      "occupation": "Engineer"
+    },
+    "wife": {
+      "name": "Jane Doe",
+      "age": 32,
+      "occupation": "Doctor"
+    },
+    "children": [
+      {
+        "name": "Emily Doe",
+        "age": 8,
+        "gender": "female"
+      },
+      {
+        "name": "Michael Doe",
+        "age": 5,
+        "gender": "male"
+      }
+    ],
+    "vitals": {
+      "address": "123 Main St",
+      "city": "Anytown",
+      "country": "USA"
+    }
+  }
+}
