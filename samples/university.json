@@ -1,0 +1,109 @@
+{
+  "education": {
+    "university": "Example University",
+    "campuses": [
+      {
+        "name": "Main Campus",
+        "location": "Anytown, USA",
+        "buildings": [
+          {
+            "name": "Science Building",
+            "floors": 5,
+            "departments": [
+              {
+                "name": "Physics",
+                "faculty": [
+                  {
+                    "name": "Dr. Smith",
+                    "position": "Professor",
+                    "contact": {
+                      "email": "smith@example.com",
+                      "phone": "123-456-7890"
+                    }
+                  },
+                  {
+                    "name": "Dr. Johnson",
+                    "position": "Associate Professor",
+                    "contact": {
+                      "email": "johnson@example.com",
+                      "phone": "987-654-3210"
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "Chemistry",
+                "faculty": [
+                  {
+                    "name": "Dr. Brown",
+                    "position": "Professor",
+                    "contact": {
+                      "email": "brown@example.com",
+                      "phone": "111-222-3333"
+                    }
+                  },
+                  {
+                    "name": "Dr. Davis",
+                    "position": "Assistant Professor",
+                    "contact": {
+                      "email": "davis@example.com",
+                      "phone": "444-555-6666"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Arts Building",
+            "floors": 3,
+            "departments": [
+              {
+                "name": "English",
+                "faculty": [
+                  {
+                    "name": "Prof. White",
+                    "position": "Professor",
+                    "contact": {
+                      "email": "white@example.com",
+                      "phone": "777-888-9999"
+                    }
+                  },
+                  {
+                    "name": "Prof. Green",
+                    "position": "Associate Professor",
+                    "contact": {
+                      "email": "green@example.com",
+                      "phone": "222-333-4444"
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "History",
+                "faculty": [
+                  {
+                    "name": "Prof. Black",
+                    "position": "Professor",
+                    "contact": {
+                      "email": "black@example.com",
+                      "phone": "555-666-7777"
+                    }
+                  },
+                  {
+                    "name": "Prof. Red",
+                    "position": "Assistant Professor",
+                    "contact": {
+                      "email": "red@example.com",
+                      "phone": "888-999-0000"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
