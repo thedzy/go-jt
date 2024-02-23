@@ -181,3 +181,29 @@ jt --equals=''  --key-colour=cyan  --value-colour=white --value-bold --style=7 -
 jt --equals='=' --quote='' --key-colour=blue  --value-colour=green --style=8 family.json
 ```
 ![Example 4](images/example4.png "jt --equals='=' --quote='' --key-colour=blue  --value-colour=green --style=8 family.json")
+
+
+## Why?
+
+A goof json pretty printer for those just looking at the information or passing it on to a non-technical individual\
+**There is a python version that was the driver for this
+Great accent to `jq`
+
+## How?
+Renders out of order in style choosen
+
+## What are the styles?
+0-10 try them out or lok at the code
+
+## Improvements?
+Testing on Linux and Windows
+
+## State
+- As Above, untested in Windows and Linux (todo)
+
+## Notes/Troubleshooting:
+
+## New
+
+### 1.0
+Turn a json object into a human readable tree
