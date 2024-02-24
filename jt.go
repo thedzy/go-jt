@@ -9,6 +9,7 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+	"time"
 )
 
 // Colours
@@ -161,26 +162,60 @@ func main() {
 		fmt.Println("Positional arguments:", positionalArgs)
 	}
 
-	// Get information for stdin
-	stat, err := os.Stdin.Stat()
-	if err != nil {
-		fmt.Fprintln(os.Stderr, "Error getting file information for stdin:", err)
-		return
-	}
+	stat, _ := os.Stdin.Stat()
 
-	// Check if stdin is a regular file and has data
-	if (stat.Mode()&os.ModeCharDevice) == 0 && stat.Size() > 0 {
-		// Read from stdin
-		stdinData, err := ioutil.ReadAll(os.Stdin)
-		if err != nil {
-			fmt.Fprintln(os.Stderr, "Error reading from stdin:", err)
-			return
+	var stdin string
+
+	// Check if stdin is a pipe and has data
+	if (stat.Mode() & os.ModeNamedPipe) != 0 {
+		// Create a channel to signal when input is received
+		inputReceived := make(chan struct{})
+		go func() {
+			// Read from stdin
+			stdinData, err := ioutil.ReadAll(os.Stdin)
+			if err != nil {
+				fmt.Fprintln(os.Stderr, "Error reading from stdin:", err)
+				return
+			}
+			stdin = string(stdinData)
+
+			// Signal that input is received
+			close(inputReceived)
+		}()
+
+		// Wait for input or timeout
+		select {
+		case <-inputReceived:
+			// Input received
+			if *debug {
+				fmt.Println("Received input from stdin:", stdin)
+			}
+			// Process stdin
+			var data map[string]interface{}
+
+			// Parse the JSON data
+			if err := json.Unmarshal([]byte(stdin), &data); err != nil {
+				var arrData interface{}
+
+				// Fail over to array
+				err := json.Unmarshal([]byte(stdin), &arrData)
+				if err != nil {
+					fmt.Fprintln(os.Stderr, "Error:", err)
+				}
+				// Call the function to print JSON data (with array)
+				printJson("", arrData, options)
+			} else {
+				// Call the function to print JSON data
+				printJson("", data, options)
+			}
+		case <-time.After(5 * time.Second): // Timeout after 5 seconds
+			if *debug {
+				fmt.Println("No input received from stdin within timeout")
+			}
 		}
-
-		// Append stdin data to combinedData
-		positionalArgs = append(positionalArgs, string(stdinData))
 	}
 
+	// Process positional arguments
 	for _, value := range positionalArgs {
 		var data map[string]interface{}
 
