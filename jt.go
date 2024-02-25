@@ -169,7 +169,7 @@ func main() {
 
 	// Check if stdin is a pipe and has data
 	if (stat.Mode() & os.ModeNamedPipe) != 0 {
-		// To create dynamic array
+		// Read in line by line
 		scanner := bufio.NewScanner(os.Stdin)
 		for {
 			// Scans a line from Stdin(Console)
