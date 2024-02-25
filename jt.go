@@ -14,6 +14,7 @@ import (
 
 // Colours
 var colourCodes = map[string]string{
+	"black":   "30",
 	"red":     "31",
 	"green":   "32",
 	"yellow":  "33",
@@ -79,13 +80,13 @@ func main() {
 	flag.StringVar(&options.Quote, "quote", `"`, "quoting character(s)")
 	flag.StringVar(&options.Equals, "equals", ":", "equals character(s)")
 	flag.IntVar(&options.Width, "width", 1, "width of the tree")
-	flag.StringVar(&options.KeyColour, "key-colour", "none", "key colour {red, green, yellow, blue, purple, magenta, cyan, white}")
+	flag.StringVar(&options.KeyColour, "key-colour", "none", "key colour {black, red, green, yellow, blue, purple, magenta, cyan, white}")
 	flag.BoolVar(&options.KeyBold, "key-bold", false, "bold font")
 	flag.BoolVar(&options.KeyInverted, "key-inverted", false, "inverted font")
-	flag.StringVar(&options.ValueColour, "value-colour", "none", "value colour {red, green, yellow, blue, purple, magenta, cyan, white}")
+	flag.StringVar(&options.ValueColour, "value-colour", "none", "value colour {black, red, green, yellow, blue, purple, magenta, cyan, white}")
 	flag.BoolVar(&options.ValueBold, "value-bold", false, "bolt font")
 	flag.BoolVar(&options.ValueInverted, "value-inverted", false, "inverted font")
-	flag.StringVar(&options.OtherColour, "other-colour", "none", "other colour {red, green, yellow, blue, purple, magenta, cyan, white}")
+	flag.StringVar(&options.OtherColour, "other-colour", "none", "other colour {black, red, green, yellow, blue, purple, magenta, cyan, white}")
 	flag.BoolVar(&options.OtherBold, "other-bold", false, "bold font")
 	flag.BoolVar(&options.OtherInverted, "other-inverted", false, "inverted font")
 
