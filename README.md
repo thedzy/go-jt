@@ -185,15 +185,15 @@ jt --equals='=' --quote='' --key-colour=blue  --value-colour=green --style=8 fam
 
 ## Why?
 
-A goof json pretty printer for those just looking at the information or passing it on to a non-technical individual\
+A good json pretty printer for those just looking at the information or passing it on to a non-technical individual\
 **There is a python version that was the driver for this
 Great accent to `jq`
 
 ## How?
-Renders out of order in style choosen
+Renders out of order in style chosen
 
 ## What are the styles?
-0-10 try them out or lok at the code
+0-10 try them out or look at the code
 
 ## Improvements?
 ~~Testing on Linux and Windows~~
