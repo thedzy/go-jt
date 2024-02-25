@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bufio"
 	"encoding/json"
 	"flag"
 	"fmt"
@@ -9,7 +10,6 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
-	"time"
 )
 
 // Colours
@@ -168,51 +168,38 @@ func main() {
 
 	// Check if stdin is a pipe and has data
 	if (stat.Mode() & os.ModeNamedPipe) != 0 {
-		// Create a channel to signal when input is received
-		inputReceived := make(chan struct{})
-		go func() {
-			// Read from stdin
-			stdinData, err := ioutil.ReadAll(os.Stdin)
-			if err != nil {
-				fmt.Fprintln(os.Stderr, "Error reading from stdin:", err)
-				return
-			}
-			stdin = string(stdinData)
-
-			// Signal that input is received
-			close(inputReceived)
-		}()
-
-		// Wait for input or timeout
-		select {
-		case <-inputReceived:
-			// Input received
-			if *debug {
-				fmt.Println("Received input from stdin:", stdin)
-			}
-			// Process stdin
-			var data map[string]interface{}
-
-			// Parse the JSON data
-			if err := json.Unmarshal([]byte(stdin), &data); err != nil {
-				var arrData interface{}
-
-				// Fail over to array
-				err := json.Unmarshal([]byte(stdin), &arrData)
-				if err != nil {
-					fmt.Fprintln(os.Stderr, "Error:", err)
-				}
-				// Call the function to print JSON data (with array)
-				printJson("", arrData, options)
+		// To create dynamic array
+		scanner := bufio.NewScanner(os.Stdin)
+		for {
+			// Scans a line from Stdin(Console)
+			scanner.Scan()
+			// Holds the string that scanned
+			text := scanner.Text()
+			if len(text) != 0 {
+				stdin += text
 			} else {
-				// Call the function to print JSON data
-				printJson("", data, options)
+				break
 			}
-		case <-time.After(5 * time.Second): // Timeout after 5 seconds
-			if *debug {
-				fmt.Println("No input received from stdin within timeout")
-			}
+
 		}
+		// Parse the JSON data
+		var data map[string]interface{}
+
+		if err := json.Unmarshal([]byte(stdin), &data); err != nil {
+			var arrData interface{}
+
+			// Fail over to array
+			err := json.Unmarshal([]byte(stdin), &arrData)
+			if err != nil {
+				fmt.Fprintln(os.Stderr, "Error:", err)
+			}
+			// Call the function to print JSON data (with array)
+			printJson("", arrData, options)
+		} else {
+			// Call the function to print JSON data
+			printJson("", data, options)
+		}
+
 	}
 
 	// Process positional arguments
@@ -244,7 +231,6 @@ func main() {
 			// Call the function to print JSON data
 			printJson("", data, options)
 		}
-
 	}
 }
 
