@@ -56,7 +56,8 @@ type Style struct {
 }
 
 var (
-	debug = flag.Bool("debug", false, "debug mode")
+	debug   = flag.Bool("debug", false, "debug mode")
+	version = "development"
 )
 
 type MultiStringValue []string
@@ -90,6 +91,8 @@ func main() {
 	flag.BoolVar(&options.OtherBold, "other-bold", false, "bold font")
 	flag.BoolVar(&options.OtherInverted, "other-inverted", false, "inverted font")
 
+	var showVersion = flag.Bool("version", false, "show version and exit")
+
 	// Hidden
 	flag.Var(&options.StyleOther, "s", "test style")
 
@@ -100,6 +103,7 @@ func main() {
 
 		//goland:noinspection GoPrintFunctions
 		fmt.Println("Print a json as a tree\n")
+		fmt.Println("\n--version:\n\tprint version and exit")
 
 		fmt.Println("optional arguments:")
 		order := map[string][]string{
@@ -157,6 +161,10 @@ func main() {
 	if *debug {
 		fmt.Printf("%+v\n", options)
 	}
+	if *showVersion {
+		fmt.Printf("jt version %s\n", version)
+		os.Exit(0)
+	}
 
 	positionalArgs := flag.Args()
 	if *debug {
@@ -187,15 +195,15 @@ func main() {
 		var data map[string]interface{}
 
 		if err := json.Unmarshal([]byte(stdin), &data); err != nil {
-			var arrData interface{}
+			var data interface{}
 
 			// Fail over to array
-			err := json.Unmarshal([]byte(stdin), &arrData)
+			err := json.Unmarshal([]byte(stdin), &data)
 			if err != nil {
 				fmt.Fprintln(os.Stderr, "Error:", err)
 			}
 			// Call the function to print JSON data (with array)
-			printJson("", arrData, options)
+			printJson("", data, options)
 		} else {
 			// Call the function to print JSON data
 			printJson("", data, options)
@@ -218,16 +226,16 @@ func main() {
 
 		// Parse the JSON data
 		if err := json.Unmarshal([]byte(value), &data); err != nil {
-			var arrData interface{}
+			var data interface{}
 
 			// Fail over to array
-			err := json.Unmarshal([]byte(value), &arrData)
+			err := json.Unmarshal([]byte(value), &data)
 			if err != nil {
 				fmt.Fprintln(os.Stderr, "Error:", err)
 				continue
 			}
 			// Call the function to print JSON data (with array)
-			printJson("", arrData, options)
+			printJson("", data, options)
 		} else {
 			// Call the function to print JSON data
 			printJson("", data, options)

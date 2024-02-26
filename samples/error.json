@@ -1,0 +1,102 @@
+{
+  "university": "Global Science Institute",
+  "location": {
+    "city": "Techville",
+    "country": "Innovatia"
+  },
+  "faculties": [
+    {
+      "name": "Engineering",
+      "departments": [
+        {
+          "name": "Computer Science",
+          "programs": [
+            {
+              "name": "Artificial Intelligence",
+              "courses": [
+                {
+                  "code": "AI101",
+                  "name": "Introduction to AI",
+                  "topics": ["Machine Learning", "Neural Networks", "AI Ethics"]
+                },
+                {
+                  "code": "AI202",
+                  "name": "Advanced AI Techniques",
+                  "topics": ["Deep Learning", "Reinforcement Learning", "Computer Vision"],
+                  "prerequisites": ["AI101"]
+                }
+              ],
+              "labs": [
+                ["Lab1", "Machine Learning Lab", ["TensorFlow", "PyTorch"]],
+                ["Lab2', "Robotics Lab", ["ROS", "Gazebo"]]
+              ]
+            },
+            {
+              "name": "Software Engineering",
+              "courses": [
+                {
+                  "code": "SE101",
+                  "name": "Introduction to Software Engineering",
+                  "topics": ["Software Design", "Version Control", "Testing"]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Electrical Engineering",
+          "programs": [
+            {
+              "name": "Circuit Design",
+              "courses": [
+                {
+                  "code": "CD101",
+                  "name": "Basics of Circuit Design",
+                  "topics": ["Analog Circuits", "Digital Circuits", "PCB Design"]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Science",
+      "departments": [
+        {
+          "name": "Physics",
+          "programs": [
+            {
+              "name": "Quantum Mechanics",
+              "courses": [
+                {
+                  "code": "QM101",
+                  "name": "Introduction to Quantum Mechanics",
+                  "topics": ["Wave Function", "Uncertainty Principle", "Quantum Entanglement"]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "research": {
+    "areas": ["Sustainable Energy", "Quantum Computing", "Nanotechnology"],
+    "projects": [
+      {
+        "title": "Quantum Computing for Energy Solutions",
+        "participants": [
+          {"name": "Dr. Alan Turing", "role": "Lead Scientist"},
+          {"name": "Dr. Lisa Meitner", "role": "Physicist"}
+        ],
+        "funding": "$2,000,000",
+        "objectives": [
+          "Develop quantum algorithms for energy optimization",
+          "Prototype a quantum simulation for new materials"
+        ]
+      }
+    ]
+  }
+}
+
