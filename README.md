@@ -206,4 +206,7 @@ Renders out of order in style chosen
 ## New
 
 ### 1.0
-Turn a json object into a human readable tree
+Turn a json object into a human-readable tree
+
+### 1.1 
+Improved reliability on stdin, particularly when input comes from another application and is multiline
