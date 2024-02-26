@@ -185,35 +185,21 @@ func main() {
 			// Holds the string that scanned
 			text := scanner.Text()
 			if len(text) != 0 {
-				stdin += text
+				stdin += text + "\n"
 			} else {
 				break
 			}
 
 		}
-		// Parse the JSON data
-		var data map[string]interface{}
-
-		if err := json.Unmarshal([]byte(stdin), &data); err != nil {
-			var data interface{}
-
-			// Fail over to array
-			err := json.Unmarshal([]byte(stdin), &data)
-			if err != nil {
-				fmt.Fprintln(os.Stderr, "Error:", err)
-			}
-			// Call the function to print JSON data (with array)
-			printJson("", data, options)
-		} else {
-			// Call the function to print JSON data
+		data, err := unMarshall(stdin)
+		if err == nil {
 			printJson("", data, options)
 		}
-
 	}
 
 	// Process positional arguments
 	for _, value := range positionalArgs {
-		var data map[string]interface{}
+		//var data map[string]interface{}
 
 		validLoadFile, loadFilePath := validFilePath(value)
 		if validLoadFile {
@@ -224,22 +210,11 @@ func main() {
 			value = string(jsonData)
 		}
 
-		// Parse the JSON data
-		if err := json.Unmarshal([]byte(value), &data); err != nil {
-			var data interface{}
-
-			// Fail over to array
-			err := json.Unmarshal([]byte(value), &data)
-			if err != nil {
-				fmt.Fprintln(os.Stderr, "Error:", err)
-				continue
-			}
-			// Call the function to print JSON data (with array)
-			printJson("", data, options)
-		} else {
-			// Call the function to print JSON data
+		data, err := unMarshall(value)
+		if err == nil {
 			printJson("", data, options)
 		}
+
 	}
 }
 
@@ -450,4 +425,67 @@ func validFilePath(path string) (bool, string) {
 func isValidColour(color string) bool {
 	_, ok := colourCodes[color]
 	return ok
+}
+
+func unMarshall(value string) (interface{}, error) {
+	// Parse the JSON data
+	var data map[string]interface{}
+	if err := json.Unmarshal([]byte(value), &data); err != nil {
+		var data interface{}
+
+		// Fail over to array
+		err := json.Unmarshal([]byte(value), &data)
+		if err != nil {
+			fmt.Errorf("Error:", err)
+			if jsonError, ok := err.(*json.SyntaxError); ok {
+				displayJsonError(value, int(jsonError.Offset))
+			}
+			if jsonError, ok := err.(*json.UnmarshalTypeError); ok {
+				displayJsonError(value, int(jsonError.Offset))
+			}
+			return nil, err
+		}
+		return data, nil
+	} else {
+		return data, nil
+	}
+}
+
+// displayJsonError Pin point the point of failure in json marshalling
+func displayJsonError(input string, offset int) {
+	if offset > len(input) || offset < 0 {
+		return
+	}
+
+	character := 0
+	characters := 0
+	index := 0
+	lastIndex := 0
+	_ = character
+	found := false
+	for _, value := range input {
+		index++
+		if value == '\n' || value == '\r' {
+			if found {
+				break
+			}
+			lastIndex = index
+			character = -1
+		}
+		if index == offset {
+			found = true
+			characters = index - lastIndex
+			if character > 0 {
+				characters = character
+			} else {
+				characters = 0
+			}
+		}
+		if !found {
+			character++
+		}
+		fmt.Fprintf(os.Stderr, "%c", value)
+	}
+	fmt.Fprintln(os.Stderr)
+	fmt.Fprintf(os.Stderr, "%s%s\n", strings.Repeat("_", characters), "^")
 }
